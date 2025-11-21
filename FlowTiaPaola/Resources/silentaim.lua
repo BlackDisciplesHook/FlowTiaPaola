@@ -218,42 +218,53 @@ old = hookmetamethod(workspace, "__namecall", function(self, ...)
     local arguments = {...}
 
     if SilentAim.Target and method == SilentAim.Config.Method and SilentAim.CalculateChance(SilentAim.Config.Hitchance) then
-        if method == "Raycast" then
-            arguments[2] = Direction(arguments[1], SilentAim.Target.Position)
+        local Bleh = SilentAim.Target.Position + Vector3.new(0, 1, 0)
 
+        if method == "Raycast" then
             if SilentAim.Config.BulletTeleport then
+                arguments[1] = Bleh
+                arguments[2] = Direction(Bleh, SilentAim.Target.Position)
                 _RaycastParams.FilterDescendantsInstances = {SilentAim.Target.Parent}
                 arguments[3] = _RaycastParams
+            else
+                arguments[2] = Direction(arguments[1], SilentAim.Target.Position)
             end
 
         elseif method == "FindPartOnRay" then
             local ray = arguments[1]
-            arguments[1] = Ray.new(ray.Origin, Direction(ray.Origin, SilentAim.Target.Position))
+            if SilentAim.Config.BulletTeleport then
+                arguments[1] = Ray.new(Bleh, Direction(Bleh, SilentAim.Target.Position))
+            else
+                arguments[1] = Ray.new(ray.Origin, Direction(ray.Origin, SilentAim.Target.Position))
+            end
 
         elseif method == "FindPartOnRayWithIgnoreList" then
             local ray = arguments[1]
-            arguments[1] = Ray.new(ray.Origin, Direction(ray.Origin, SilentAim.Target.Position))
-
             if SilentAim.Config.BulletTeleport then
+                arguments[1] = Ray.new(Bleh, Direction(Bleh, SilentAim.Target.Position))
                 arguments[2] = {}
+            else
+                arguments[1] = Ray.new(ray.Origin, Direction(ray.Origin, SilentAim.Target.Position))
             end
 
         elseif method == "FindPartOnRayWithWhitelist" then
             local ray = arguments[1]
-            arguments[1] = Ray.new(ray.Origin, Direction(ray.Origin, SilentAim.Target.Position))
-
             if SilentAim.Config.BulletTeleport then
+                arguments[1] = Ray.new(Bleh, Direction(Bleh, SilentAim.Target.Position))
                 arguments[2] = {SilentAim.Target.Parent}
+            else
+                arguments[1] = Ray.new(ray.Origin, Direction(ray.Origin, SilentAim.Target.Position))
             end
 
         elseif method == "Spherecast" then
-            arguments[2] = Direction(arguments[1], SilentAim.Target.Position)
-
             if SilentAim.Config.BulletTeleport then
+                arguments[1] = Bleh
+                arguments[2] = Direction(Bleh, SilentAim.Target.Position)
                 _RaycastParams.FilterDescendantsInstances = {SilentAim.Target.Parent}
                 arguments[4] = _RaycastParams
+            else
+                arguments[2] = Direction(arguments[1], SilentAim.Target.Position)
             end
-
         end
 
         return old(self, unpack(arguments))
