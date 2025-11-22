@@ -15,6 +15,7 @@ local Whitelist = getgenv().Whitelist
 
 local ESP = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/esp.lua'))()
 local SilentAim = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/silentaim.lua'))()
+local Desync = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/cframechanger.lua'))()
 
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Library/Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Library/addons/ThemeManager.lua'))()
@@ -24,17 +25,203 @@ local Window = Library:CreateWindow({
     Title = 'FlowTiaPaola | ' .. os.date("%d %b %Y"),
     Center = true,
     AutoShow = true,
-    TabPadding = 8,
+    TabPadding = 0,
     MenuFadeTime = 0.1
 })
 
 local Tabs = {
     Main = Window:AddTab('Main'),
-    Visuals = Window:AddTab('Visuals'),
+    Visuals = Window:AddTab('ESP'),
     Settings = Window:AddTab('Settings'),
 }
 
-local SilentAimMainSection = Tabs.Main:AddLeftGroupbox('SilentAim')
+local DesyncSection = Tabs.Main:AddLeftGroupbox('Desync')
+
+DesyncSection:AddToggle('DesyncEnabled', {
+    Text = "Enabled",
+    Default = false,
+    Callback = function(Value)
+        Desync.Config.Enabled = Value
+    end
+})
+
+DesyncSection:AddDivider()
+
+DesyncSection:AddDropdown('DesyncPositionType', {
+    Values = {"Disabled", "Void", "Custom", "Random"},
+    Multi = false,
+    Text = 'Position Type',
+    Default = "Disabled",
+    Callback = function(Value)
+        Desync.Config.Type = Value
+    end
+})
+
+DesyncSection:AddDivider()
+
+DesyncSection:AddSlider('DesyncRandomX', {
+    Text = 'Random X',
+    Default = 25,
+    Min = 1,
+    Max = 100,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.RandomX = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncRandomY', {
+    Text = 'Random Y',
+    Default = 25,
+    Min = 1,
+    Max = 100,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.RandomY = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncRandomZ', {
+    Text = 'Random Z',
+    Default = 25,
+    Min = 1,
+    Max = 100,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.RandomZ = Value
+    end
+})
+
+DesyncSection:AddDivider()
+
+DesyncSection:AddSlider('DesyncCustomX', {
+    Text = 'Custom X',
+    Default = 25,
+    Min = -100,
+    Max = 100,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.CustomX = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncCustomY', {
+    Text = 'Custom Y',
+    Default = 25,
+    Min = -100,
+    Max = 100,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.CustomY = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncCustomZ', {
+    Text = 'Custom Z',
+    Default = 25,
+    Min = -100,
+    Max = 100,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.CustomZ = Value
+    end
+})
+
+DesyncSection:AddDivider()
+
+DesyncSection:AddDropdown('DesyncAngleType', {
+    Values = {"Disabled", "Custom", "Random"},
+    Multi = false,
+    Text = 'Angle Type',
+    Default = "Disabled",
+    Callback = function(Value)
+        Desync.Config.AngleType = Value
+    end
+})
+
+DesyncSection:AddDivider()
+
+DesyncSection:AddSlider('DesyncRandomYaw', {
+    Text = 'Random Yaw',
+    Default = 180,
+    Min = 1,
+    Max = 360,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.RandomYaw = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncRandomPitch', {
+    Text = 'Random Pitch',
+    Default = 180,
+    Min = 1,
+    Max = 360,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.RandomPitch = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncRandomRoll', {
+    Text = 'Random Roll',
+    Default = 180,
+    Min = 1,
+    Max = 360,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.RandomRoll = Value
+    end
+})
+
+DesyncSection:AddDivider()
+
+DesyncSection:AddSlider('DesyncCustomYaw', {
+    Text = 'Custom Yaw',
+    Default = 0,
+    Min = -180,
+    Max = 180,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.CustomYaw = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncCustomPitch', {
+    Text = 'Custom Pitch',
+    Default = 0,
+    Min = -180,
+    Max = 180,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.CustomPitch = Value
+    end
+})
+
+DesyncSection:AddSlider('DesyncCustomRoll', {
+    Text = 'Custom Roll',
+    Default = 0,
+    Min = -180,
+    Max = 180,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        Desync.Config.CustomRoll = Value
+    end
+})
+
+local SilentAimMainSection = Tabs.Main:AddLeftGroupbox('Silent Aim')
 
 SilentAimMainSection:AddToggle('SilentAimEnabled', {
     Text = "Enabled",
@@ -64,11 +251,22 @@ SilentAimMainSection:AddSlider('SilentAimSmoothness', {
     end
 })
 
+SilentAimMainSection:AddDropdown('SilentAimPriorityHitpart', {
+    Values = {"Head", "Torso", "Left Leg", "Right Leg", "Left Arm", "Right Arm", "UpperTorso", "LowerTorso", "LeftUpperLeg", "RightUpperLeg", "LeftLowerLeg", "RightLowerLeg", "LeftFoot", "RightFoot", "LeftUpperArm", "RightUpperArm", "LeftLowerArm", "RightLowerArm", "LeftHand", "RightHand"},
+    Multi = false,
+    AllowNull = true,
+    Text = 'Priority Hitpart',
+    Default = nil,
+    Callback = function(Value)
+        SilentAim.Config.PriorityPart = Value
+    end
+})
+
 SilentAimMainSection:AddDropdown('SilentAimAimpart', {
     Values = {"Head", "Torso", "Left Leg", "Right Leg", "Left Arm", "Right Arm", "UpperTorso", "LowerTorso", "LeftUpperLeg", "RightUpperLeg", "LeftLowerLeg", "RightLowerLeg", "LeftFoot", "RightFoot", "LeftUpperArm", "RightUpperArm", "LeftLowerArm", "RightLowerArm", "LeftHand", "RightHand"},
     Multi = true,
     Text = 'Hitparts',
-    Default = "Head",
+    Default = {"Head", "Torso"},
     Callback = function(Value)
         local T = {}
 
@@ -79,17 +277,6 @@ SilentAimMainSection:AddDropdown('SilentAimAimpart', {
         end
 
         SilentAim.Config.Hitparts = T
-    end
-})
-
-SilentAimMainSection:AddDropdown('SilentAimPriorityHitpart', {
-    Values = {"Head", "Torso", "Left Leg", "Right Leg", "Left Arm", "Right Arm", "UpperTorso", "LowerTorso", "LeftUpperLeg", "RightUpperLeg", "LeftLowerLeg", "RightLowerLeg", "LeftFoot", "RightFoot", "LeftUpperArm", "RightUpperArm", "LeftLowerArm", "RightLowerArm", "LeftHand", "RightHand"},
-    Multi = false,
-    AllowNull = true,
-    Text = 'Priority Hitpart',
-    Default = nil,
-    Callback = function(Value)
-        SilentAim.Config.PriorityPart = Value
     end
 })
 
