@@ -9,7 +9,7 @@ local Desync = {
     Config = {
         Enabled = false,
 
-        Type = "Disabled",
+        Type = "Disabled", -- "Disabled", "Void", "Custom", "Random"
 
         -- Position
         RandomX = 25,
@@ -91,7 +91,7 @@ table.insert(Desync.Connections, Heartbeat:Connect(function()
 end))
 
 local Old
-Old = hookmetamethod(workspace, "__index", function(Self, Key, Index)
+Old = hookmetamethod(workspace, "__index", function(Self, Key)
     if Desync.Config.Enabled and not checkcaller() and Character and Character:FindFirstChild("HumanoidRootPart") and Character:FindFirstChild("Head") then
         if Key == "CFrame" then
             if Self == LocalPlayer.Character.HumanoidRootPart then
@@ -105,21 +105,28 @@ Old = hookmetamethod(workspace, "__index", function(Self, Key, Index)
                     return Desync.Real or CFrame.new()
                 end
             elseif Self == LocalPlayer.Character.Head then
-                local headPosition = Desync.Real.Position + Vector3.new(0, (LocalPlayer.Character.HumanoidRootPart.Size.Y / 2) + 0.5, 0)
+                local HeadPosition = Desync.Real.Position + Vector3.new(0, (LocalPlayer.Character.HumanoidRootPart.Size.Y / 2) + 0.5, 0)
+
                 if Desync.Real and Desync.Config.AngleType ~= "Disabled" and Desync.FakeAngles then
-                    return CFrame.new(headPosition) * CFrame.fromEulerAnglesYXZ(
+                    return CFrame.new(HeadPosition) * CFrame.fromEulerAnglesYXZ(
                         Desync.FakeAngles[1],
                         Desync.FakeAngles[2],
                         Desync.FakeAngles[3]
                     )
                 else
-                    return CFrame.new(headPosition)
+                    return CFrame.new(HeadPosition)
                 end
+            end
+        elseif Key == "Position" then
+            if Self == LocalPlayer.Character.HumanoidRootPart then
+                return Desync.Real and Desync.Real.Position or Vector3.new()
+            elseif Self == LocalPlayer.Character.Head then
+                return Desync.Real and (Desync.Real.Position + Vector3.new(0, (LocalPlayer.Character.HumanoidRootPart.Size.Y / 2) + 0.5, 0)) or Vector3.new()
             end
         end
     end
 
-    return Old(Self, Key, Index)
+    return Old(Self, Key)
 end)
 
 return Desync
