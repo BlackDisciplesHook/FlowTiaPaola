@@ -16,7 +16,7 @@ local Whitelist = getgenv().Whitelist
 local ESP = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/esp.lua'))()
 local SilentAim = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/silentaim.lua'))()
 local Desync = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/cframechanger.lua'))()
-local KillAll = loadstring("game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/killall.lua")
+local KillAll = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/killall.lua'))()
 
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Library/Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Library/addons/ThemeManager.lua'))()
