@@ -16,6 +16,7 @@ local Whitelist = getgenv().Whitelist
 local ESP = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/esp.lua'))()
 local SilentAim = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/silentaim.lua'))()
 local Desync = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/cframechanger.lua'))()
+local KillAll = loadstring("game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Resources/killall.lua")
 
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Library/Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/BlackDisciplesHook/FlowTiaPaola/refs/heads/main/FlowTiaPaola/Library/addons/ThemeManager.lua'))()
@@ -35,7 +36,7 @@ local Tabs = {
     Settings = Window:AddTab('Settings'),
 }
 
-local DesyncSection = Tabs.Main:AddLeftGroupbox('Desync')
+local DesyncSection = Tabs.Main:AddRightGroupbox('Desync')
 
 DesyncSection:AddToggle('DesyncEnabled', {
     Text = "Enabled",
@@ -351,6 +352,45 @@ SilentAimMainSection:AddSlider('SilentAimFOVRadius', {
     Compact = false,
     Callback = function(Value)
         SilentAim.FOVConfig.Radius = Value
+    end
+})
+
+local KillAllSection = Tabs.Main:AddLeftGroupbox('Kil All')
+
+KillAllSection:AddToggle('KillAllEnabled', {
+    Text = "Enabled",
+    Default = false,
+    Callback = function(Value)
+        KillAll.Config.Enabled = Value
+    end
+})
+
+KillAllSection:AddToggle('KillAllTeamCheckEnabled', {
+    Text = "Team Check",
+    Default = false,
+    Callback = function(Value)
+        KillAll.Config.TeamCheck = Value
+    end
+})
+
+
+KillAllSection:AddToggle('KillAllForceFieldCheckEnabled', {
+    Text = "ForceField Check",
+    Default = false,
+    Callback = function(Value)
+        KillAll.Config.ForceFieldCheck = Value
+    end
+})
+
+KillAllSection:AddSlider('KillAllDistance', {
+    Text = 'Distance',
+    Default = 10,
+    Min = 1,
+    Max = 50,
+    Rounding = 0,
+    Compact = false,
+    Callback = function(Value)
+        KillAll.Config.Distance = Value
     end
 })
 
