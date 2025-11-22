@@ -37,3 +37,4 @@ table.insert(KillAll.Connections, RenderStepped:Connect(function()
     end
 end))
 
+return KillAll
