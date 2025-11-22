@@ -91,7 +91,7 @@ table.insert(Desync.Connections, Heartbeat:Connect(function()
 end))
 
 local Old
-Old = hookmetamethod(workspace, "__index", function(Self, Key)
+Old = hookmetamethod(workspace, "__index", function(Self, Key, Index)
     if Desync.Config.Enabled and not checkcaller() and Character and Character:FindFirstChild("HumanoidRootPart") and Character:FindFirstChild("Head") then
         if Key == "CFrame" then
             if Self == LocalPlayer.Character.HumanoidRootPart then
@@ -117,16 +117,10 @@ Old = hookmetamethod(workspace, "__index", function(Self, Key)
                     return CFrame.new(HeadPosition)
                 end
             end
-        elseif Key == "Position" then
-            if Self == LocalPlayer.Character.HumanoidRootPart then
-                return Desync.Real and Desync.Real.Position or Vector3.new()
-            elseif Self == LocalPlayer.Character.Head then
-                return Desync.Real and (Desync.Real.Position + Vector3.new(0, (LocalPlayer.Character.HumanoidRootPart.Size.Y / 2) + 0.5, 0)) or Vector3.new()
-            end
         end
     end
 
-    return Old(Self, Key)
+    return Old(Self, Key, Index)
 end)
 
 return Desync
