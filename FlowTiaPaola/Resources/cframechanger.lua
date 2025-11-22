@@ -95,11 +95,11 @@ Old = hookmetamethod(workspace, "__index", function(Self, Key, Index)
     if Desync.Config.Enabled and not checkcaller() and Character and Character:FindFirstChild("HumanoidRootPart") and Character:FindFirstChild("Head") then
         if Key == "CFrame" then
             if Self == LocalPlayer.Character.HumanoidRootPart then
-                if Desync.Real and Desync.Config.AngleType ~= "Disabled" and Desync.FakeAngles then
+                if Desync.Real and Desync.Config.AngleType ~= "Disabled" and Desync.RealAngles then
                     return CFrame.new(Desync.Real.Position) * CFrame.fromEulerAnglesYXZ(
-                        Desync.FakeAngles[1],
-                        Desync.FakeAngles[2],
-                        Desync.FakeAngles[3]
+                        Desync.RealAngles[1],
+                        Desync.RealAngles[2],
+                        Desync.RealAngles[3]
                     )
                 else
                     return Desync.Real or CFrame.new()
@@ -107,11 +107,11 @@ Old = hookmetamethod(workspace, "__index", function(Self, Key, Index)
             elseif Self == LocalPlayer.Character.Head then
                 local HeadPosition = Desync.Real.Position + Vector3.new(0, (LocalPlayer.Character.HumanoidRootPart.Size.Y / 2) + 0.5, 0)
 
-                if Desync.Real and Desync.Config.AngleType ~= "Disabled" and Desync.FakeAngles then
+                if Desync.Real and Desync.Config.AngleType ~= "Disabled" and Desync.RealAngles then
                     return CFrame.new(HeadPosition) * CFrame.fromEulerAnglesYXZ(
-                        Desync.FakeAngles[1],
-                        Desync.FakeAngles[2],
-                        Desync.FakeAngles[3]
+                        Desync.RealAngles[1],
+                        Desync.RealAngles[2],
+                        Desync.RealAngles[3]
                     )
                 else
                     return CFrame.new(HeadPosition)
